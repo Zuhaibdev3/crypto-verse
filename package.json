@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "serve": "serve -s build",
-    "preview:pm2": "pm2 start --name cryptoverse-web serve -- -s build",
+    "preview:pm2": "pm2 start --name cryptoverse-web npm -- run serve",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
