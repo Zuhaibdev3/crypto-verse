@@ -68,12 +68,30 @@ export const QuestionList = [
     },
 ];
 export const StyleList = [
-    "Realistic",
-    "Digital Art",
-    "Cartoon",
-    "3D Model",
-    "Pixel Art",
-    "Anime",
+    {
+        label:"Realistic",
+        value:"photographic"
+    },
+    {
+        label:"Digital Art",
+        value:"digital-art"
+    },
+    {
+        label:"Cartoon",
+        value:"comic-book"
+    },
+    {
+        label:"3D Model",
+        value:"3d-model"
+    },
+    {
+        label:"Pixel Art",
+        value:"pixel-art"
+    },
+    {
+        label:"Anime",
+        value:"anime"
+    },
 ];
 
 export const ImageAspectRatio = ["AR  1:1", "AR  2:3", "AR  3:2"];

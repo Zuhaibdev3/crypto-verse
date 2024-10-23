@@ -16,6 +16,7 @@ import SelectDropdown from "../../component/SelectDropdown";
 import AnimatedNumbersCounter from "../../component/AnimatedNumbersCounter";
 import AccordionCustom from "../../component/AccordionCustom";
 import Model from "../../component/model";
+import axios from "axios";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,14 +31,93 @@ const Home = () => {
   const [ImageGenerationForm, setImageGenerationForm] = useState({
     prompt: ""
   })
+  const [formData, setFormData] = useState({
+    imageMode: "IMAGE_STRENGTH",
+    strength: [0.35],
+    step: 40,
+    seed: 0,
+    scale: 5,
+    style: "",
+    quantity: 1,
+    positivePrompt: "",
+    negativePrompt: "",
+    image: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value, }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          // Resize dimensions (1536x1536)
+          const resizeWidth = 1536;
+          const resizeHeight = 1536;
+
+          // Create a canvas element
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = resizeWidth;
+          canvas.height = resizeHeight;
+
+          // Draw the resized image onto the canvas
+          ctx.drawImage(img, 0, 0, resizeWidth, resizeHeight); // Resize directly
+
+          // Convert canvas to Blob
+          canvas.toBlob((blob) => {
+            // Create a new File object from the Blob
+            const resizedFile = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+
+            // Update formData with the resized file object
+            setFormData((prevData) => ({
+              ...prevData,
+              image: resizedFile, // Store the resized file object
+            }));
+          }, file.type || 'image/jpeg');
+        };
+
+        img.src = event.target.result;
+      };
+
+      reader.readAsDataURL(file); // Read the selected file as a data URL
+    }
+  };
+
 
   const HandleImageGenerateSubmit = async () => {
-    const body = {
-      prompt: ImageGenerationForm?.prompt
-    }
-    await generateImage(body)
-  }
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'image') {
+        data.append(key, value); // Append the image file
+      } else if (key === "strength") {
+        data.append(key, value[0]); // Append the image file
 
+      } else {
+        data.append(key, value); // Append other form fields
+      }
+    });
+
+    await fetch('http://localhost:5000/api/v1/user/stabilityai', {
+      method: 'POST',
+      body: data,
+    });
+
+    // const body = {
+    //   prompt: ImageGenerationForm?.prompt
+    // }
+    // await generateImage(body)
+    // const res = axios.post(body)
+  }
+  console.log(formData, "formData")
 
   return (
     <div className="home-container">
@@ -55,7 +135,7 @@ const Home = () => {
         <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
           <div className="home-prompt">
             <div>
-              <input name="prompt" value={ImageGenerationForm?.prompt} placeholder="Example Prompt" onChange={(e) => setImageGenerationForm({ ...ImageGenerationForm, [e?.target.name]: e.target.value })} />
+              <input name="prompt" value={formData?.positivePrompt} placeholder="Enter Your Prompt Here" onChange={(e) => setFormData((prevData) => ({ ...prevData, "positivePrompt": e?.target?.value, }))} />
               <Button
                 variant="contained"
                 className="home-generate-now-btn"
@@ -87,7 +167,7 @@ const Home = () => {
                   onClick={() => setStyleModal(true)}
                 >
                   <div>
-                    <p>Add Styles</p>
+                    <p>{formData?.style ? formData?.style : "Add Styles"}</p>
                     <ArrowDropDownIcon
                       style={{ color: "#FEFEFE", marginLeft: "10px" }}
                     />
@@ -262,12 +342,12 @@ const Home = () => {
               className="home-style-modal-btn"
               disableRipple={true}
               onClick={() => {
-                setSelectedStyle("None");
+                setFormData((prevData) => ({ ...prevData, "style": "None", }));
                 setStyleModal(false);
               }}
             >
               <div>
-                {selectdStyle === "None" && (
+                {formData?.style === "None" && (
                   <img src={SelectedIcon} className="selected-icon" />
                 )}
                 <DoNotDisturbAltIcon style={{ marginBottom: "5px" }} />
@@ -281,12 +361,12 @@ const Home = () => {
               className="home-style-modal-btn"
               disableRipple={true}
               onClick={() => {
-                setSelectedStyle("Enhance HDR");
+                setFormData((prevData) => ({ ...prevData, "style": "enhance", }));
                 setStyleModal(false);
               }}
             >
               <div>
-                {selectdStyle === "Enhance HDR" && (
+                {formData?.style === "enhance" && (
                   <img src={SelectedIcon} className="selected-icon" />
                 )}
                 <p>
@@ -303,12 +383,12 @@ const Home = () => {
               className="home-style-modal-btn"
               disableRipple={true}
               onClick={() => {
-                setSelectedStyle("Detailed Texture");
+                setFormData((prevData) => ({ ...prevData, "style": "tile-texture", }));
                 setStyleModal(false);
               }}
             >
               <div>
-                {selectdStyle === "Detailed Texture" && (
+                {formData?.style === "tile-texture" && (
                   <img src={SelectedIcon} className="selected-icon" />
                 )}
                 <p>
@@ -319,7 +399,7 @@ const Home = () => {
               </div>
             </Button>
           </Grid>
-          {StyleList.map((val, index) => {
+          {StyleList.map((el, index) => {
             return (
               <Grid item key={index} xs={6} sm={4} md={4} lg={4} xl={4}>
                 <Button
@@ -327,16 +407,16 @@ const Home = () => {
                   className="home-style-modal-btn-2"
                   disableRipple={true}
                   onClick={() => {
-                    setSelectedStyle(val);
+                    setFormData((prevData) => ({ ...prevData, "style": el?.value, }));
                     setStyleModal(false);
                   }}
                 >
                   <div>
-                    {selectdStyle === val && (
+                    {formData?.style === el?.value && (
                       <img src={SelectedIcon} className="selected-icon" />
                     )}
                     <img src={StyleImage} className="style-modal-image" />
-                    <p>{val}</p>
+                    <p>{el?.label}</p>
                   </div>
                 </Button>
               </Grid>
@@ -429,7 +509,7 @@ const Home = () => {
         </div>
         <div className="home-adv-option-modal-input">
           <p>-no</p>
-          <input placeholder="enter your prompt here" />
+          <input placeholder="enter your prompt here" value={formData?.negativePrompt} onChange={(e) => setFormData((prevData) => ({ ...prevData, "negativePrompt": e?.target?.value, }))} />
         </div>
         <div className="home-adv-option-modal-section">
           <p className="home-adv-option-modal-title">Upscale</p>
@@ -457,8 +537,11 @@ const Home = () => {
         <div className="home-modal-line" />
       </Model>
       <UploadImageForGenerationModal
+        setFormData={setFormData}
+        formData={formData}
         setUploadImageModal={setUploadImageModal}
         uploadImageModal={uploadImageModal}
+        handleFileChange={handleFileChange}
       />
     </div>
   );

@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { Range } from "react-range";
 import './index.css'
-const RangeSlider = () => {
-  const [values, setValues] = useState([0.5]);
+const RangeSlider = ({ setFormData, formData }) => {
   const STEP = 0.1;
   const MIN = 0;
   const MAX = 1;
-
   return (
     <Range
-      values={values}
+      values={formData?.strength}
       step={STEP}
       min={MIN}
       max={MAX}
-      onChange={(values) => setValues(values)}
+      onChange={(values) => setFormData((prevData) => ({ ...prevData, "strength": values }))}
       renderTrack={({ props, children }) => {
-        const percentage = ((values[0] - MIN) / (MAX - MIN)) * 100;
+        const percentage = ((formData?.strength[0] - MIN) / (MAX - MIN)) * 100;
         return (
           <div
             {...props}
@@ -53,21 +51,21 @@ const RangeSlider = () => {
       }}
       renderThumb={({ props }) => (
         <div
-                  {...props}
-                  key={props.key}
-                  style={{
-                    ...props.style,
-                    height: "50px",
-                    width: "50px",
-                    backgroundImage: "linear-gradient(to right, #ff7357, #ff2957)",
-                    borderRadius: "100px",
-                    padding:"1px"
-                  }}
-                >
-                  <div className="slider-circle-inner">
-                    <p>{values}</p>
-                  </div>
-                </div>
+          {...props}
+          key={props.key}
+          style={{
+            ...props.style,
+            height: "50px",
+            width: "50px",
+            backgroundImage: "linear-gradient(to right, #ff7357, #ff2957)",
+            borderRadius: "100px",
+            padding: "1px"
+          }}
+        >
+          <div className="slider-circle-inner">
+            <p>{formData?.strength}</p>
+          </div>
+        </div>
       )}
     />
   );
