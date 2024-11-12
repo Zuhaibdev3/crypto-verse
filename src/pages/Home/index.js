@@ -17,6 +17,8 @@ import AnimatedNumbersCounter from "../../component/AnimatedNumbersCounter";
 import AccordionCustom from "../../component/AccordionCustom";
 import Model from "../../component/model";
 import axios from "axios";
+import cookies from "../../utils/cookies";
+import { useStabilityAi } from "../../hooks/useStabilityAi";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,8 +28,9 @@ const Home = () => {
   const [imageAspectRatioSelected, setImageAspectRatioSelected] = useState("AR  1:1");
   const [upscaleSelected, setUpscaleSelected] = useState("Original (1024x1024)");
   const [uploadImageModal, setUploadImageModal] = useState(false);
-  const { store: { image, status }, generateImage } = useDalle()
-
+  // const { store: { image, status }, generateImage } = useDalle()
+  const { store: { nfts, status }, ImageToImageGenerate } = useStabilityAi()
+  console.log(nfts, "nfts")
   const [ImageGenerationForm, setImageGenerationForm] = useState({
     prompt: ""
   })
@@ -38,7 +41,7 @@ const Home = () => {
     seed: 0,
     scale: 5,
     style: "",
-    quantity: 1,
+    quantity: 5,
     positivePrompt: "",
     negativePrompt: "",
     image: null,
@@ -94,30 +97,21 @@ const Home = () => {
 
 
   const HandleImageGenerateSubmit = async () => {
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === 'image') {
-        data.append(key, value); // Append the image file
-      } else if (key === "strength") {
-        data.append(key, value[0]); // Append the image file
+    console.log(formData,"formData") 
+    // const data = new FormData();
+    // Object.entries(formData).forEach(([key, value]) => {
+    //   if (key === 'image') {
+    //     data.append(key, value);
+    //   } else if (key === "strength") {
+    //     data.append(key, value[0]);
 
-      } else {
-        data.append(key, value); // Append other form fields
-      }
-    });
+    //   } else {
+    //     data.append(key, value);
+    //   }
+    // });
+    // ImageToImageGenerate(data)
 
-    await fetch('http://localhost:5000/api/v1/user/stabilityai', {
-      method: 'POST',
-      body: data,
-    });
-
-    // const body = {
-    //   prompt: ImageGenerationForm?.prompt
-    // }
-    // await generateImage(body)
-    // const res = axios.post(body)
   }
-  console.log(formData, "formData")
 
   return (
     <div className="home-container">

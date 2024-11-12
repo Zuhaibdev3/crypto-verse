@@ -100,16 +100,12 @@ export const UpscaleList = ["Original (1024x1024)", "x2 (2048x2048)"]
 
 export const ImageQuantity = [
     {
-        heading: "Single Image",
-        title: "",
-    },
-    {
         heading: "Single NFT Image",
         title: "",
     },
     {
         heading: "Multi-NFT Collection",
-        title: "10-1000 Images",
+        title: "1-10 Images",
     },
 ]
 

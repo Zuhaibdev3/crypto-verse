@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import example from "./apps/example";
 import dalle from "./apps/dalle";
+import stabilityAi from "./apps/stabilityAi";
+import nft from "./apps/nft";
 import auth from "./apps/auth";
 // import auth from "./apps/auth"
 const store = configureStore({
     reducer: {
         example,
         dalle,
-        auth
+        auth,
+        stabilityAi,
+        nft
     },
 
 
