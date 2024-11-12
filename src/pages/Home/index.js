@@ -97,19 +97,19 @@ const Home = () => {
 
 
   const HandleImageGenerateSubmit = async () => {
-    console.log(formData,"formData") 
-    // const data = new FormData();
-    // Object.entries(formData).forEach(([key, value]) => {
-    //   if (key === 'image') {
-    //     data.append(key, value);
-    //   } else if (key === "strength") {
-    //     data.append(key, value[0]);
+    console.log(formData, "formData")
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === 'image') {
+        data.append(key, value);
+      } else if (key === "strength") {
+        data.append(key, value[0]);
 
-    //   } else {
-    //     data.append(key, value);
-    //   }
-    // });
-    // ImageToImageGenerate(data)
+      } else {
+        data.append(key, value);
+      }
+    });
+    ImageToImageGenerate(data)
 
   }
 
