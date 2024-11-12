@@ -29,7 +29,7 @@ const Home = () => {
   const [upscaleSelected, setUpscaleSelected] = useState("Original (1024x1024)");
   const [uploadImageModal, setUploadImageModal] = useState(false);
   // const { store: { image, status }, generateImage } = useDalle()
-  const { store: { nfts, status }, ImageToImageGenerate } = useStabilityAi()
+  const { store: { nfts, status }, ImageToImageGenerate , TextToImageGenerate} = useStabilityAi()
   console.log(nfts, "nfts")
   const [ImageGenerationForm, setImageGenerationForm] = useState({
     prompt: ""
@@ -113,6 +113,33 @@ const Home = () => {
 
   }
 
+  const handleImageWithText = async () => {
+    console.log(formData, "formData")
+   
+
+    const body = {
+      steps: 40,
+    width: 1024,
+    height: 1024,
+    seed: 0,
+    cfg_scale: 5,
+    samples: 10,
+    text_prompts: [
+      {
+        "text": formData.positivePrompt,
+        "weight": 1
+      },
+      {
+        "text": "blurry, bad",
+        "weight": -1
+      }
+    ],
+    };
+
+   await TextToImageGenerate(body)
+
+  }
+
   return (
     <div className="home-container">
       <div className="home-header">
@@ -134,7 +161,7 @@ const Home = () => {
                 variant="contained"
                 className="home-generate-now-btn"
                 disableRipple={true}
-                onClick={() => HandleImageGenerateSubmit()}
+                onClick={() => formData?.image  ? HandleImageGenerateSubmit() : handleImageWithText()}
               >
                 {status === "pending" ? "Generating..." : "Generate Now"}
               </Button>

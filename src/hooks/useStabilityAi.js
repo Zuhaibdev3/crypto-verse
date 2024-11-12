@@ -14,7 +14,7 @@ export const useStabilityAi = () => {
 
     const TextToImageGenerate = (body) => {
         navigate(`/after-generate-image`)
-        dispatch(TextToImageGenerateAction(body))
+      return  dispatch(TextToImageGenerateAction(body))
     }
 
     return {
