@@ -7,6 +7,8 @@ import Footer from '../component/Footer';
 import { useDispatch } from 'react-redux';
 import { verifyAction } from '../store/apps/auth';
 
+import { useLocation} from "react-router-dom";
+
 const AppLayout = () => {
     const dispatch = useDispatch()
     const [connetWalletModal, setConnectWalletModal] = useState(false);
@@ -17,9 +19,18 @@ const AppLayout = () => {
         dispatch(verifyAction(dispatch));
     }, []);
 
+
+    const location = useLocation();
+    const showNavbar = location.pathname === "/"; 
+
     return (
         <>
-            <Header onClick={() => setConnectWalletModal(true)} />
+
+        // New code to show this navbar on home page only
+        {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />}
+
+           // Old one
+            // <Header onClick={() => setConnectWalletModal(true)} />
 
             <Suspense fallback={<>Loading</>}>
                 <Outlet></Outlet>
