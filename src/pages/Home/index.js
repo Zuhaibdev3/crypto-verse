@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Footer, SelectDropdown, AnimatedNumbersCounter, AccordionCustom, Model, RangeSlider, } from "../../component";
 import { HeaderImage, WhatWeOffer, NftgenerationImage, StyleImage, LogoPng, } from "../../asset/images";
 import "./index.css";
@@ -19,6 +19,8 @@ import Model from "../../component/model";
 import axios from "axios";
 import cookies from "../../utils/cookies";
 import { useStabilityAi } from "../../hooks/useStabilityAi";
+import { useAuth } from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -28,12 +30,14 @@ const Home = () => {
   const [imageAspectRatioSelected, setImageAspectRatioSelected] = useState("AR  1:1");
   const [upscaleSelected, setUpscaleSelected] = useState("Original (1024x1024)");
   const [uploadImageModal, setUploadImageModal] = useState(false);
+  const { store: { user } } = useAuth()
   // const { store: { image, status }, generateImage } = useDalle()
-  const { store: { nfts, status }, ImageToImageGenerate , TextToImageGenerate} = useStabilityAi()
+  const { store: { nfts, status }, ImageToImageGenerate, TextToImageGenerate } = useStabilityAi()
   console.log(nfts, "nfts")
   const [ImageGenerationForm, setImageGenerationForm] = useState({
     prompt: ""
   })
+  const [selected, setSelected] = useState("Single NFT Image");
   const [formData, setFormData] = useState({
     imageMode: "IMAGE_STRENGTH",
     strength: [0.35],
@@ -41,16 +45,22 @@ const Home = () => {
     seed: 0,
     scale: 5,
     style: "",
-    quantity: 5,
+    quantity: 1,
     positivePrompt: "",
     negativePrompt: "",
     image: null,
   });
 
+  useEffect(() => {
+    setFormData({ ...formData, quantity: selected === "Single NFT Image" ? 1 : 10 })
+  }, [selected])
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value, }));
   };
+
+  console.log(user, "user")
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Selected file
@@ -97,7 +107,8 @@ const Home = () => {
 
 
   const HandleImageGenerateSubmit = async () => {
-    console.log(formData, "formData")
+    if (!user?._id) return toast.error("Please connect your wallet to continue!")
+
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       if (key === 'image') {
@@ -114,29 +125,28 @@ const Home = () => {
   }
 
   const handleImageWithText = async () => {
-    console.log(formData, "formData")
-   
+    if (!user?._id) return toast.error("Please connect your wallet to continue!")
 
     const body = {
       steps: 40,
-    width: 1024,
-    height: 1024,
-    seed: 0,
-    cfg_scale: 5,
-    samples: 10,
-    text_prompts: [
-      {
-        "text": formData.positivePrompt,
-        "weight": 1
-      },
-      {
-        "text": "blurry, bad",
-        "weight": -1
-      }
-    ],
+      width: 1024,
+      height: 1024,
+      seed: 0,
+      cfg_scale: 5,
+      samples: formData.quantity,
+      text_prompts: [
+        {
+          "text": formData.positivePrompt,
+          "weight": 1
+        },
+        {
+          "text": "blurry, bad",
+          "weight": -1
+        }
+      ],
     };
 
-   await TextToImageGenerate(body)
+    await TextToImageGenerate(body)
 
   }
 
@@ -161,7 +171,8 @@ const Home = () => {
                 variant="contained"
                 className="home-generate-now-btn"
                 disableRipple={true}
-                onClick={() => formData?.image  ? HandleImageGenerateSubmit() : handleImageWithText()}
+                disabled={!formData?.positivePrompt}
+                onClick={() => formData?.image ? HandleImageGenerateSubmit() : handleImageWithText()}
               >
                 {status === "pending" ? "Generating..." : "Generate Now"}
               </Button>
@@ -170,7 +181,7 @@ const Home = () => {
 
           <div className="home-dropdown-main">
             <div>
-              <SelectDropdown data={ImageQuantity} />
+              <SelectDropdown data={ImageQuantity} selected={selected} setSelected={setSelected} />
               <Button
                 variant="contained"
                 className="home-modal-btn"

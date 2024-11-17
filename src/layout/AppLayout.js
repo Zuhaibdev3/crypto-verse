@@ -26,11 +26,11 @@ const AppLayout = () => {
     return (
         <>
 
-        // New code to show this navbar on home page only
+        {/* New code to show this navbar on home page only */}
         {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />}
 
-           // Old one
-            // <Header onClick={() => setConnectWalletModal(true)} />
+           {/* // Old one */}
+            {/* // <Header onClick={() => setConnectWalletModal(true)} /> */}
 
             <Suspense fallback={<>Loading</>}>
                 <Outlet></Outlet>

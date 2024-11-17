@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import "./index.css";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-const SelectDropdown = ({ data }) => {
-  const [selected, setSelected] = useState(data[0].heading);
+const SelectDropdown = ({ data, selected, setSelected }) => {
+  
   const [show, setShow] = useState(false);
   return (
     <div>
@@ -18,8 +18,8 @@ const SelectDropdown = ({ data }) => {
           }}
         >
           <div>
-            <p>{selected}</p>
-            <ArrowDropDownIcon style={{ color: "#FEFEFE" ,marginLeft:"10px"}} />
+            <p>{selected ?? ""}</p>
+            <ArrowDropDownIcon style={{ color: "#FEFEFE", marginLeft: "10px" }} />
           </div>
         </Button>
         {show && (
@@ -34,7 +34,7 @@ const SelectDropdown = ({ data }) => {
                       className="dropdown-item"
                       key={index}
                       onClick={() => {
-                        setSelected(val.heading);
+                        if (setSelected) setSelected(val.heading);
                         setShow(false);
                         // document.getElementById(
                         //   "dropdown-content"
