@@ -31,8 +31,8 @@
   background-image: linear-gradient(to right, #ff7357, #ff2957) !important;
   height: 58px !important;
   border-radius: 100px !important;
-  width: 222px !important;
-  min-width: 222px !important;
+  width: 260px !important;
+  min-width: 260px !important;
   color: #ffffff !important;
   font-size: 16px !important;
   font-weight: 400 !important;
@@ -40,7 +40,20 @@
 }
 .after-g-i-n-wallet-btn > img {
   margin-right: 10px;
+  margin-left: 25px;
 }
+
+.after-g-i-n-wallet-btn-profile-btn-link{
+  display: flex;
+}
+
+.after-g-i-n-wallet-btn .after-g-i-n-wallet-btn-profile-btn{
+  width: 60px;
+  height: auto;
+  margin-left: 15px;
+  margin-right: 0px;
+}
+
 .after-g-i-n-middle {
   display: flex;
   align-items: center;
@@ -129,4 +142,17 @@
     width: 100px !important;
     min-width: 100px !important;
   }
+}
+
+
+
+
+
+
+
+
+
+
+.dropdown-content-2{
+  z-index: 1000;
 }

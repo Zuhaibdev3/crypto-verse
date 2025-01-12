@@ -21,7 +21,8 @@ const AppLayout = () => {
 
 
     const location = useLocation();
-    const showNavbar = location.pathname === "/"; 
+    const showNavbar =
+      location.pathname === "/" || location.pathname === "/whitepaper" || location.pathname==="/Roadmap";
 
     return (
         <>

@@ -3,8 +3,8 @@ import "./index.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { LogoPng } from "../../asset/images";
-import { useNavigate, Link } from "react-router-dom";
+import { LogoPng, profilePlaceHolder } from "../../asset/images";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Wallet2 } from "../../asset/svg";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { IconButton } from "@mui/material";
@@ -13,7 +13,14 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+
 const AfterGenerateImageNavbar = ({ exploreHide }) => {
+  const location = useLocation();
+
+  // Determine active route
+  const isGenerateActive = location.pathname === "/after-generate-image";
+  const isMyNftActive = location.pathname === "/myNft";
+
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
@@ -21,28 +28,23 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
   };
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  const List = [
-    {
-      title: "Home",
-      path: "/",
-    },
-    {
-      title: "Features",
-      path: "",
-    },
-    {
-      title: "How It Works",
-      path: "",
-    },
-    {
-      title: "Tokens",
-      path: "",
-    },
-    {
-      title: "FAQ",
-      path: "",
-    },
-  ];
+
+  // State to manage the selected dropdown option
+  const [show, setShow] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShow(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShow(false);
+  };
+
+  // for new component myNft navigation
+  const handleNavigateToMyNft = (tab) => {
+    navigate("/myNft", { state: { selectedTab: tab } });
+  };
+
   return (
     <div className="after-generate-image-navbar-container">
       {!isMatch ? (
@@ -60,35 +62,81 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
           <div className="after-g-i-n-middle">
             <div>
               <Link
+                to="/after-generate-image"
                 className="after-g-i-n-page-title-main"
                 style={{ flexDirection: "column" }}
               >
-                <p className="after-g-i-n-page-active">Generate</p>
-                <div className="after-g-i-n-page-active-line" />
-              </Link>
-            </div>
-            {!exploreHide && (
-              <div>
-                <Link className="after-g-i-n-page-title-main">
-                  <p className="after-g-i-n-page-title">Explore</p>
-                  <ArrowDropDownIcon style={{ color: "#FEFEFE" }} />
-                </Link>
-                <div className="after-g-i-n-page-line" />
-              </div>
-            )}
-            <div>
-              <Link className="after-g-i-n-page-title-main">
-                <p className="after-g-i-n-page-title" onClick={()=>navigate("/profile")}>My NFT</p>
-                <ArrowDropDownIcon style={{ color: "#FEFEFE" }} />
+                <p
+                  className={`after-g-i-n-page-title ${
+                    isGenerateActive ? "after-g-i-n-page-active" : ""
+                  }`}
+                >
+                  Generate
+                </p>
+                {isGenerateActive && (
+                  <div className="after-g-i-n-page-active-line" />
+                )}
+
+                {/* {isMyNftActive && ( <div className="after-g-i-n-page-line" />)} */}
               </Link>
               <div className="after-g-i-n-page-line" />
             </div>
-            <div>
+
+            <div
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <Link className="after-g-i-n-page-title-main">
-                <p className="after-g-i-n-page-title">Template</p>
+                <p
+                  onClick={() => setShow(!show)}
+                  className={`after-g-i-n-page-title ${
+                    isMyNftActive ? "after-g-i-n-page-active" : ""
+                  }`}
+                >
+                  My NFT
+                </p>
+
                 <ArrowDropDownIcon style={{ color: "#FEFEFE" }} />
+                {/* {isMyNftActive && <div className="after-g-i-n-page-active-line" />} */}
               </Link>
               <div className="after-g-i-n-page-line" />
+
+              {show && (
+                <div
+                  className="dropdown-content-2"
+                  id="dropdown-content"
+                  style={{ border: "" }}
+                >
+                  <div className="dropdown-content-items-main">
+                    <div>
+                      {[
+                        { heading: "All", tab: "All" },
+                        { heading: "Draft", tab: "Draft" },
+                        { heading: "Favourites", tab: "Favorites" },
+                      ].map((val, index) => (
+                        <Button
+                          variant="text"
+                          disableRipple={true}
+                          className="dropdown-item"
+                          key={index}
+                          style={{
+                            borderBottomWidth: index < 2 ? "0.7px" : "0px", // Adjusting for the number of items
+                            borderBottomColor: "#FFFFFF33",
+                          }}
+                          onClick={() => handleNavigateToMyNft(val.tab)}
+                        >
+                          <div>
+                            <p className="dropdown-item-heading">
+                              {val.heading}
+                            </p>
+                            <p className="dropdown-item-title">{val.title}</p>
+                          </div>
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <Button
@@ -98,6 +146,11 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
           >
             <img src={Wallet2} />
             0x05avc....aswa12
+
+            <Link to="/profile" className="after-g-i-n-wallet-btn-profile-btn-link" >
+            <img src={profilePlaceHolder} className="after-g-i-n-wallet-btn-profile-btn"/>
+            </Link>
+
           </Button>
         </div>
       ) : (

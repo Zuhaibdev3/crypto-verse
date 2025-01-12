@@ -33,13 +33,27 @@ const Header = ({ onClick }) => {
       title: "Features",
       path: "",
     },
+
+
+    // This link will be showed when user is login
+    {
+      title: "  MyNft",
+      path: "myNft",
+    },
+
+
+
     {
       title: "How It Works",
       path: "",
     },
     {
-      title: "Tokens",
-      path: "",
+      title: "RoadMap",
+      path: "/Roadmap",
+    },
+    {
+      title: "Whitepaper",
+      path: "/whitepaper",
     },
     {
       title: "FAQ",
