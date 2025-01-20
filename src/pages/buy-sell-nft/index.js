@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AfterGenerateImageNavbar } from "../../component";
+import  AfterGenerateImageNavbar  from "../../component/after-genderate-image-navbar";
 import "./index.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -17,9 +17,11 @@ import {
   NftStoreImg6,
   NftStoreLogo4,
   solanaLogo
-} from "../../assets/images";
+} from "../../asset/images";
 import { faArrowRight, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 // import { Grid, Button, Typography } from "@mui/material";
 

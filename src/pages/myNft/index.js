@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AfterGenerateImageNavbar } from "../../component";
+import AfterGenerateImageNavbar from "../../component/after-genderate-image-navbar";
 import "./index.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -11,7 +11,7 @@ import {
   AfterGenerateImageCard3,
   AfterGenerateImageCard4,
   AfterGenerateImageCard5,
-} from "../../assets/images";
+} from "../../asset/images";
 
 const MyNft = () => {
   // console.log("api:", images);

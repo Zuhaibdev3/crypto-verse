@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-import {
-  Navbar,
-  Footer,
-  SelectDropdwon,
-  AnimatedNumbersCountr,
-  AccordionCustom,
-  Model,
-  RangeSlider,
-} from "../../component";
+// import {
+//   Navbar,
+//   Footer,
+//   SelectDropdwon,
+//   AnimatedNumbersCountr,
+//   AccordionCustom,
+//   Model,
+//   RangeSlider,
+// } from "../../component";
+
+import Header from "../../component/Header";
+
+import Footer from "../../component/Footer";
+
+import Model from "../../component/model";
+
+
 import {
   HeaderImage,
   WhitepaperHeaderImg,
@@ -22,7 +30,7 @@ import {
   NftgenerationImage,
   StyleImage,
   LogoPng,
-} from "../../assets/images";
+} from "../../asset/images";
 import "./index.css";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -39,7 +47,7 @@ import {
   Solana,
   Copy2,
   Document,
-} from "../../svg";
+} from "../../asset/svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
@@ -56,7 +64,7 @@ const Whitepaper = () => {
 
   return (
     <div className="home-container">
-      {showNavbar && <Navbar onClick={() => setConnectWalletModal(true)} />}
+      {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />}
 
       <div className="whitepaper-header">
         <div className="whitepaper-header-div-img">

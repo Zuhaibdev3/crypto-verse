@@ -6,6 +6,9 @@ const Home = lazy(() => import("../pages/Home"))
 const AfterGenerateImage = lazy(() => import("../pages/after-generate-image"))
 const Profile = lazy(() => import("../pages/profile"))
 
+
+
+
 const BuySellNft = lazy(()=> import("../pages/buy-sell-nft"))
 const MyNft = lazy(()=> import("../pages/myNft"))
 const Whitepaper = lazy(()=> import("../pages/whitepaper"))
