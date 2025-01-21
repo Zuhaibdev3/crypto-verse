@@ -10,10 +10,10 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid";
-import { LogoPng } from "../../asset/images";
 import { useAuth } from "../../hooks/useAuth";
 import { Wallet2 } from "../../asset/svg";
 import { formatToken } from "../../utils/TokenFormater";
+import { LogoPng, profilePlaceHolder } from "../../asset/images";
 
 const Header = ({ onClick }) => {
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ const Header = ({ onClick }) => {
               </Link>
               <div>
                 {List.map((val, index) => {
+                  if (!user?.walletAddress && val.path === "myNft") return
                   return (
                     <>
                       {val.title === "FAQ" ? (
@@ -99,7 +100,17 @@ const Header = ({ onClick }) => {
                   );
                 })}
               </div>
+
               {user?.walletAddress ?
+                // <Button
+                //   variant="contained"
+                //   className="after-g-i-n-wallet-btn"
+                //   disableRipple={true}
+                //   onClick={onClick}
+                // >
+                //   <img src={Wallet2} />
+                //   {formatToken(user?.walletAddress)}
+                // </Button>
                 <Button
                   variant="contained"
                   className="after-g-i-n-wallet-btn"
@@ -108,7 +119,13 @@ const Header = ({ onClick }) => {
                 >
                   <img src={Wallet2} />
                   {formatToken(user?.walletAddress)}
-                </Button> :
+
+                  <Link to="/profile" className="after-g-i-n-wallet-btn-profile-btn-link" >
+                    <img src={profilePlaceHolder} className="after-g-i-n-wallet-btn-profile-btn" />
+                  </Link>
+
+                </Button>
+                :
                 <Button
                   variant="contained"
                   className="navbar-wallet-btn"

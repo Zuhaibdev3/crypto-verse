@@ -13,6 +13,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import { useAuth } from "../../hooks/useAuth";
+import { formatToken } from "../../utils/TokenFormater";
 
 const AfterGenerateImageNavbar = ({ exploreHide }) => {
   const location = useLocation();
@@ -21,6 +23,7 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
   const isGenerateActive = location.pathname === "/after-generate-image";
   const isMyNftActive = location.pathname === "/myNft";
 
+  const { store: { user } } = useAuth()
   const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const handleDrawerClose = () => {
@@ -67,9 +70,8 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
                 style={{ flexDirection: "column" }}
               >
                 <p
-                  className={`after-g-i-n-page-title ${
-                    isGenerateActive ? "after-g-i-n-page-active" : ""
-                  }`}
+                  className={`after-g-i-n-page-title ${isGenerateActive ? "after-g-i-n-page-active" : ""
+                    }`}
                 >
                   Generate
                 </p>
@@ -89,9 +91,8 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
               <Link className="after-g-i-n-page-title-main">
                 <p
                   onClick={() => setShow(!show)}
-                  className={`after-g-i-n-page-title ${
-                    isMyNftActive ? "after-g-i-n-page-active" : ""
-                  }`}
+                  className={`after-g-i-n-page-title ${isMyNftActive ? "after-g-i-n-page-active" : ""
+                    }`}
                 >
                   My NFT
                 </p>
@@ -139,16 +140,17 @@ const AfterGenerateImageNavbar = ({ exploreHide }) => {
               )}
             </div>
           </div>
+
           <Button
             variant="contained"
             className="after-g-i-n-wallet-btn"
             disableRipple={true}
           >
             <img src={Wallet2} />
-            0x05avc....aswa12
+            {formatToken(user?.walletAddress)}
 
             <Link to="/profile" className="after-g-i-n-wallet-btn-profile-btn-link" >
-            <img src={profilePlaceHolder} className="after-g-i-n-wallet-btn-profile-btn"/>
+              <img src={profilePlaceHolder} className="after-g-i-n-wallet-btn-profile-btn" />
             </Link>
 
           </Button>
