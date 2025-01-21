@@ -1,3 +1,5 @@
+
+
 .buy-sell-nft-container {
     background-color: #05020e;
     min-height: 100vh;
@@ -56,12 +58,17 @@
     margin-bottom: 10px;
     font-size: 34px;
     font-weight: 700;
+    color: white;
 }
 
 .buy-sell-showcase-text {
     position: relative;
     text-align: left;
     margin-left: 12px;
+}
+
+.buy-sell-showcase-text h6{
+    color: white;
 }
 
 .buy-sell-light-text p{
@@ -73,6 +80,10 @@
     font-weight: 600;
 }
 
+
+.buy-sell-nft-checkmark{
+    color: white;
+}
 .buy-sell-nft-checkmark img{
     vertical-align: middle;
     margin-left: 5px;
@@ -92,7 +103,8 @@
 .buy-sell-detail-heading-row{
     display: flex;
     flex-direction: row;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.07)
+    border-bottom: 2px solid rgba(255, 255, 255, 0.07);
+    color: white;
 }
 
 .buy-sell-detail-heading-row h1{
@@ -107,6 +119,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    color: white;
 }
 
 
@@ -284,6 +297,9 @@ body.modal-open {
     }
 }
 
+.buy-sell-pop-up-bid-box-head h4{
+    color: white;
+}
 
 .buy-sell-pop-up-bid-box-head button {
     position: absolute;
@@ -310,6 +326,7 @@ body.modal-open {
     padding: 20px;
     border-radius: 10px;
     margin-top: 15px;
+    color: white;
 }
 
 .buy-sell-bid-info {
@@ -412,6 +429,14 @@ body.modal-open {
     border-radius: 10px;
 }
 
+.buy-sell-transaction-box-head h4{
+    color: white;
+}
+
+.buy-sell-transaction-box-head small{
+color: #7C876E;
+}
+
 .buy-sell-transaction-row{
     display: flex;
     flex-direction: row;
@@ -438,6 +463,7 @@ body.modal-open {
     padding: 15px;
     border-radius: 10px;
     margin: 15px 0px;
+    color: white;
 }
 
 .buy-sell-transaction-middle-box-go-button{

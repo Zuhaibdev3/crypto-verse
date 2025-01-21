@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import  AfterGenerateImageNavbar  from "../../component/after-genderate-image-navbar";
+import "./bootstrap.min.css"
 import "./index.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";

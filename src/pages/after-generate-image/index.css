@@ -127,3 +127,94 @@
     font-size: 12px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.generate-image-buy-sell-carousel-heaading {
+  margin-bottom: 20px;
+}
+
+
+.generate-image-buy-sell-carousel-heaading p{
+  font-size: 25px;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: "Readex Pro";
+}
+
+.my-swiper {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.carousel-slide {
+  width: max-content!important; /* Fixed width for each card */
+}
+
+.swiper-slide {
+  margin-right: 0px !important;
+}
+
+
+
+.generate-image-buy-sell-carousel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+}
+
+.generate-image-buy-sell-carousel-row {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.generate-image-buy-sell-carousel-img-card {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 20px;
+  /* width: 10%; */
+  width: 75%;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.generate-image-buy-sell-carousel-img-card img {
+  width: 100%;
+  height: auto;
+}
+
+.generate-image-buy-sell-carousel-img-card-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.generate-image-buy-sell-carousel-img-card-row h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  color: white;
+  text-decoration: none;
+}
+
+
+.generate-image-buy-sell-carousel-img-card-row p {
+  font-size: 14px;
+  color: rgba(235, 235, 245, 0.6);
+  text-decoration: none;
+}
