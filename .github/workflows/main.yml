@@ -18,11 +18,11 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Deploy to DigitalOcean
-      #   run: |
-      #     # Connect to DigitalOcean Droplet
-      #     ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
-      #       echo "Connected to server"
+      - name: Deploy to DigitalOcean
+        run: |
+          # Connect to DigitalOcean Droplet
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
+            echo "Connected to server"
 
       #       # Navigate to the project directory
       #       cd ~/crypto-verse
