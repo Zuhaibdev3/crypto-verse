@@ -1,19 +1,31 @@
-name: NodeJS Github Action
+name: Deploy to DigitalOcean
 
-on: push 
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
-    steps: 
-      - uses: actions/checkout@v3
-      - name: Use Node
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-        uses: actions/setup-node@v3
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          node-version: 16
-      - name: Install Dependencies
-        run: npm install
-      - name: Run test 
-        run: npm test 
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to DigitalOcean
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
+            echo "Connected to server"
+            cd ~/crypto-verse   # Crypto-verse project directory
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart all
+            echo "Deployment successful!"
+          EOF
