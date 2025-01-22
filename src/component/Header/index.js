@@ -13,7 +13,7 @@ import Grid from "@mui/material/Grid";
 import { useAuth } from "../../hooks/useAuth";
 import { Wallet2 } from "../../asset/svg";
 import { formatToken } from "../../utils/TokenFormater";
-// import { LogoPng, profilePlaceHolder } from "../../asset/images";
+import { LogoPng, profilePlaceHolder } from "../../asset/images";
 
 const Header = ({ onClick }) => {
   const navigate = useNavigate();
