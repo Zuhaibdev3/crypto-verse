@@ -18,63 +18,24 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Set up Node.js
-        run: |
-          # Install npm (Node.js package manager) if not installed
-          if ! command -v npm &> /dev/null
-          then
-            echo "npm could not be found, installing..."
-            curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-            sudo apt-get install -y nodejs
-          fi
-
-      - name: Install pm2
-        run: |
-          # Install pm2 if not installed
-          if ! command -v pm2 &> /dev/null
-          then
-            echo "pm2 could not be found, installing..."
-            sudo npm install pm2@latest -g
-          fi
-
-      - name: Checkout code in crypto-verse directory
-        run: |
-          # Create project directory if not exists and clone repository
-          mkdir -p ~/crypto-verse
-          cd ~/crypto-verse
-          git clone https://github.com/${{ github.repository }} .
-        
-      - name: Pull latest changes from main
-        run: |
-          # Pull the latest changes from the main branch
-          cd ~/crypto-verse
-          git reset --hard
-          git checkout main
-          git pull origin main
-
-      - name: Install Dependencies
-        run: |
-          cd ~/crypto-verse
-          npm install --legacy-peer-deps
-
-      - name: Build Project
-        run: |
-          cd ~/crypto-verse
-          # Build the project and handle errors
-          npm run build || { echo 'Build failed, aborting deployment.'; exit 1; }
-
       - name: Deploy to DigitalOcean
         run: |
-          # Connect to server and deploy only if the build is successful
+          # Connect to DigitalOcean Droplet
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
             echo "Connected to server"
 
             # Navigate to the project directory
             cd ~/crypto-verse
 
-            # Ensure we are on the main branch and pull changes
+            # Ensure we are on the main branch and pull the latest changes
             git checkout main
             git pull origin main
+
+            # Install dependencies
+            npm install
+
+            # Build the project
+            npm run build || { echo 'Build failed, aborting deployment.'; exit 1; }
 
             # Restart PM2 processes
             pm2 restart 0
