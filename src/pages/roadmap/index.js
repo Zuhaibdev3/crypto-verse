@@ -55,13 +55,13 @@ const Roadmap = () => {
   const [connectLoading, setConnectLoading] = useState(false);
   const [connectLoadingDone, setConnectLoadingDone] = useState(false);
 
-  const location = useLocation();
-  const showNavbar =
-    location.pathname === "/" || location.pathname === "/whitepaper" || location.pathname==="/Roadmap";
+  // const location = useLocation();
+  // const showNavbar =
+  //   location.pathname === "/" || location.pathname === "/whitepaper" || location.pathname==="/Roadmap";
 
   return (
     <div className="home-container">
-      {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />}
+      {/* {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />} */}
 
       <div className="whitepaper-header">
         <div className="whitepaper-header-div-img">

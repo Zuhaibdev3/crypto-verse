@@ -206,33 +206,38 @@
 }
 
 
-/* .buy-sell-pop-up-bid-box-overlay::-webkit-scrollbar {
+/* Chrome, Safari, and Edge */
+::-webkit-scrollbar {
     width: 10px;
-}
-
-.buy-sell-pop-up-bid-box-overlay::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.buy-sell-pop-up-bid-box-overlay::-webkit-scrollbar-thumb {
-    background-color: #B5FB02;
+    /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #1F221C;
+    /* Make the track transparent */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #ff2957;
     border-radius: 10px;
     border: none;
-} */
-
-/* Firefox */
-@-moz-document url-prefix() {
+  }
+  
+  
+  
+  /* Firefox */
+  @-moz-document url-prefix() {
     * {
         scrollbar-width: thin;
-        scrollbar-color: #B5FB02 transparent;
-
+        scrollbar-color: #ff2957 transparent;
+  
     }
-
-    *.buy-sell-pop-up-bid-box-overlay::-moz-scrollbar-thumb {
+  
+    *::-moz-scrollbar-thumb {
         border-radius: 10px;
         /* Add border-radius here */
     }
-}
+  }
 
 
 

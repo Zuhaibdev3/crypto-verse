@@ -28,6 +28,8 @@
   text-decoration: none;
   margin: 0px 15px;
   font-family: "Atkinson Hyperlegible";
+
+  cursor: pointer;
 }
 .navbar-logo {
   width: 85px;
@@ -86,4 +88,79 @@
     width: 50px;
     height: 50px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.after-generate-image-navbar-container {
+  background-color: #121317;
+  height: 100px;
+}
+.after-generate-image-navbar-container-inner {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 35px;
+}
+.after-g-i-n-back-btn {
+  background-color: #1e1f23 !important;
+  height: 68px !important;
+  width: 120px !important;
+  min-width: 120px !important;
+  border-radius: 16px !important;
+  padding: 0px !important;
+}
+.after-g-i-n-back-btn > img {
+  width: 32px;
+  height: 32px;
+}
+.after-g-i-n-back-btn > div {
+  background-color: #ececec;
+  height: 16px;
+  width: 1px;
+  margin: 0px 15px;
+}
+.after-g-i-n-wallet-btn {
+  background-image: linear-gradient(to right, #ff7357, #ff2957) !important;
+  height: 58px !important;
+  border-radius: 100px !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-transform: lowercase !important;
+}
+.after-g-i-n-wallet-btn > img {
+  margin-right: 10px;
+  margin-left: 25px;
+}
+
+.after-g-i-n-wallet-btn-profile-btn-link{
+  display: flex;
+}
+
+.after-g-i-n-wallet-btn .after-g-i-n-wallet-btn-profile-btn{
+  width: 60px;
+  height: auto;
+  margin-left: 15px;
+  margin-right: 0px;
 }

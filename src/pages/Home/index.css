@@ -782,3 +782,38 @@
     height: 12px;
   }
 }
+
+
+
+/* Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  width: 10px;
+  /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  /* Make the track transparent */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ff2957;
+  border-radius: 10px;
+  border: none;
+}
+
+
+
+/* Firefox */
+@-moz-document url-prefix() {
+  * {
+      scrollbar-width: thin;
+      scrollbar-color: #ff2957 transparent;
+
+  }
+
+  *::-moz-scrollbar-thumb {
+      border-radius: 10px;
+      /* Add border-radius here */
+  }
+}

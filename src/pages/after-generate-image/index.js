@@ -18,10 +18,14 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { useStabilityAi } from "../../hooks/useStabilityAi";
+import ScrollToTop from "../../component/ScrollToTop";
 
 
 
 const AfterGenerateImage = () => {
+
+  <ScrollToTop/>
+
   const navigate = useNavigate();
   const { store: { nfts, status }, } = useStabilityAi()
 

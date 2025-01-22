@@ -58,13 +58,13 @@ const Whitepaper = () => {
   const [connectLoading, setConnectLoading] = useState(false);
   const [connectLoadingDone, setConnectLoadingDone] = useState(false);
 
-  const location = useLocation();
-  const showNavbar =
-    location.pathname === "/" || location.pathname === "/whitepaper" || location.pathname==="/Roadmap";
+  // const location = useLocation();
+  // const showNavbar =
+  //   location.pathname === "/" || location.pathname === "/whitepaper" || location.pathname==="/Roadmap";
 
   return (
     <div className="home-container">
-      {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />}
+      {/* {showNavbar && <Header onClick={() => setConnectWalletModal(true)} />} */}
 
       <div className="whitepaper-header">
         <div className="whitepaper-header-div-img">
@@ -294,6 +294,7 @@ const Whitepaper = () => {
 
 
           <Footer />
+
         </Grid>
 
         <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />

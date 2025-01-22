@@ -21,6 +21,7 @@ import cookies from "../../utils/cookies";
 import { useStabilityAi } from "../../hooks/useStabilityAi";
 import { useAuth } from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import Footer from "../../component/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -291,7 +292,7 @@ const Home = () => {
               </Grid>
             </Grid>
           </div>
-          <div className="features-main">
+          <div className="features-main" id="features-section" >
             <p className="what-we-offer-title">features</p>
             <p className="what-we-offer-heading">
               Unleash
@@ -333,7 +334,7 @@ const Home = () => {
             />
             <AnimatedNumbersCounter counter={4.8} title="Rating Work" sign="" />
           </div>
-          <div className="question-main" id="faq">
+          <div className="question-main" id="faq-section">
             <Grid container spacing={7}>
               <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
                 <p className="what-we-offer-title">Have a Question?</p>
@@ -358,6 +359,9 @@ const Home = () => {
               </Grid>
             </Grid>
           </div>
+
+          <Footer/>
+
         </Grid>
         <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
       </Grid>

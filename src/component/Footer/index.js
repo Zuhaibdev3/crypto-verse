@@ -1,9 +1,13 @@
 import React from "react";
 import "./index.css";
-import { LogoPng } from "../../asset/images";
+import { LogoPng, FooterSocialIcon  } from "../../asset/images";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import { Twitter, LinkedIn, GitHub, Facebook } from "@mui/icons-material";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDribbble } from '@fortawesome/free-brands-svg-icons'
+
 const Footer = () => {
   const List = [
     {
@@ -43,6 +47,19 @@ const Footer = () => {
           );
         })}
       </div>
+
+
+      <div className="footer-page-icons-row">
+          <Twitter/>
+          <LinkedIn/>
+          <GitHub/>
+          <Facebook/>
+          <FontAwesomeIcon icon={faDribbble}  className="footer-page-icons-row-svg-dribble"/>
+          <img src={FooterSocialIcon} />
+      </div>
+
+
+
       <div className="footer-list-main">
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>

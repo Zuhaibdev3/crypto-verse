@@ -21,12 +21,16 @@ import {
 } from "../../asset/images";
 import { faArrowRight, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ScrollToTop from "../../component/ScrollToTop";
 
 
 
 // import { Grid, Button, Typography } from "@mui/material";
 
 const BuySellNft = () => {
+
+  <ScrollToTop/>
+
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);

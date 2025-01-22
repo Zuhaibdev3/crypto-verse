@@ -36,12 +36,13 @@ const AppLayout = () => {
             <Suspense fallback={<>Loading</>}>
                 <Outlet></Outlet>
             </Suspense>
-            <Grid container spacing={0}>
+
+            {/* <Grid container spacing={0} style={{border: '3px solid red'}}>
                 <Grid item xs={1} sm={1} md={1} lg={1} xl={1} />
                 <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
                     <Footer />
                 </Grid>
-            </Grid>
+            </Grid> */}
 
             <ConnectToWalletModal
                 connetWalletModal={connetWalletModal}
