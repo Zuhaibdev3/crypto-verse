@@ -20,12 +20,25 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
+          # Connect to server and deploy
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
             echo "Connected to server"
-            cd ~/crypto-verse   # Crypto-verse project directory
+            
+            # Navigate to the project directory
+            cd ~/crypto-verse
+
+            # Pull the latest changes from the main branch
+            git checkout main  # Ensure we are on the main branch
             git pull origin main
+
+            # Install dependencies
             npm install
+
+            # Build the project
             npm run build
+
+            # Restart PM2 processes
             pm2 restart all
+
             echo "Deployment successful!"
           EOF
