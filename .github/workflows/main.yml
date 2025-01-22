@@ -24,6 +24,21 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
             echo "Connected to server"
 
-            
+            # Navigate to the project directory
+            cd ~/crypto-verse
+
+            # Reset any uncommitted changes
+            git reset --hard
+
+            # Ensure we are on the main branch and pull the latest changes
+            git checkout main
+            git pull origin main || { echo 'Git pull failed, aborting deployment.'; exit 1; }
+
+            # Install dependencies
+            npm install || { echo 'npm install failed, aborting deployment.'; exit 1; }
+
+            # Build the project
+            npm run build || { echo 'Build failed, aborting deployment.'; exit 1; }
+
             echo "Deployment successful!"
           EOF
