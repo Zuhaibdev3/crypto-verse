@@ -48,13 +48,14 @@ jobs:
         run: |
           # Pull the latest changes from the main branch
           cd ~/crypto-verse
+          git reset --hard
           git checkout main
           git pull origin main
 
       - name: Install Dependencies
         run: |
           cd ~/crypto-verse
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Build Project
         run: |
