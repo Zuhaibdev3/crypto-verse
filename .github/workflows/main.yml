@@ -23,13 +23,28 @@ jobs:
           # Connect to server and deploy
           ssh -o StrictHostKeyChecking=no ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_IP }} << 'EOF'
             echo "Connected to server"
-            
+
             # Navigate to the project directory
             cd ~/crypto-verse
 
-            # Pull the latest changes from the main branch
-            git checkout main  # Ensure we are on the main branch
+            # Ensure we are on the main branch and pull changes
+            git checkout main
             git pull origin main
+
+            # Install npm (Node.js package manager) if not installed
+            if ! command -v npm &> /dev/null
+            then
+              echo "npm could not be found, installing..."
+              curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+              sudo apt-get install -y nodejs
+            fi
+
+            # Install pm2 if not installed
+            if ! command -v pm2 &> /dev/null
+            then
+              echo "pm2 could not be found, installing..."
+              sudo npm install pm2@latest -g
+            fi
 
             # Install dependencies
             npm install
