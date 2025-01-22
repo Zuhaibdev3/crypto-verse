@@ -26,7 +26,7 @@ const Header = ({ onClick }) => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const List = [
     {
-      title: "Homezzz",
+      title: "Home",
       path: "/",
     },
     {
