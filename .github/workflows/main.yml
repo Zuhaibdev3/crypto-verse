@@ -53,7 +53,7 @@ jobs:
             npm run build
 
             # Restart PM2 processes
-            pm2 restart all
+            pm2 restart 0
 
             echo "Deployment successful!"
           EOF
