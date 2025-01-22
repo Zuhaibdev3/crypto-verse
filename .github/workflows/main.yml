@@ -44,4 +44,4 @@ jobs:
       #       pm2 restart 0 || { echo 'PM2 restart failed, aborting deployment.'; exit 1; }
 
       #       echo "Deployment successful!"
-      #     EOF
+          EOF
