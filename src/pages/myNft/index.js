@@ -5,19 +5,20 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import CheckIcon from "@mui/icons-material/Check";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  AfterGenerateImageCard1,
-  AfterGenerateImageCard2,
-  AfterGenerateImageCard3,
-  AfterGenerateImageCard4,
-  AfterGenerateImageCard5,
-} from "../../asset/images";
+// import {
+//   AfterGenerateImageCard1,
+//   AfterGenerateImageCard2,
+//   AfterGenerateImageCard3,
+//   AfterGenerateImageCard4,
+//   AfterGenerateImageCard5,
+// } from "../../asset/images";
+import { useNft } from "../../hooks/useNft";
 
 const MyNft = () => {
   // console.log("api:", images);
 
   const navigate = useNavigate();
-  
+
 
   // const [list, setList] = useState([
   //   {
@@ -56,6 +57,7 @@ const MyNft = () => {
   const location = useLocation();
 
   const itemType = ["All", "Draft", "Favorites"];
+   const { store: { allNft, }, GetAll } = useNft()
 
 
 
@@ -63,7 +65,6 @@ const MyNft = () => {
 
 
 
-  
   useEffect(() => {
     if (location.state?.selectedTab) {
       setItemTypeSelected(location.state.selectedTab);
@@ -73,27 +74,27 @@ const MyNft = () => {
 
 
   const [list, setList] = useState([
-    {
-      img: AfterGenerateImageCard5,
-      isSelected: true,
-      title: "Single Item",
-      text: "Cyber Kangaroo In space, sci-fi style, purple colors",
-      type: "Draft", // Define the type
-    },
-    {
-      img: AfterGenerateImageCard3,
-      isSelected: true,
-      title: "Single Item",
-      text: "Cyber Kangaroo In space, sci-fi style, purple colors",
-      type: "Favorites", // Define the type
-    },
-    {
-      img: AfterGenerateImageCard5,
-      isSelected: true,
-      title: "Single Item",
-      text: "Cyber Kangaroo In space, sci-fi style, purple colors",
-      type: "All", // Define the type
-    },
+    // {
+    //   img: AfterGenerateImageCard5,
+    //   isSelected: true,
+    //   title: "Single Item",
+    //   text: "Cyber Kangaroo In space, sci-fi style, purple colors",
+    //   type: "Draft", // Define the type
+    // },
+    // {
+    //   img: AfterGenerateImageCard3,
+    //   isSelected: true,
+    //   title: "Single Item",
+    //   text: "Cyber Kangaroo In space, sci-fi style, purple colors",
+    //   type: "Favorites", // Define the type
+    // },
+    // {
+    //   img: AfterGenerateImageCard5,
+    //   isSelected: true,
+    //   title: "Single Item",
+    //   text: "Cyber Kangaroo In space, sci-fi style, purple colors",
+    //   type: "All", // Define the type
+    // },
   ]);
 
   // Function to toggle the selection state of an image
@@ -109,6 +110,16 @@ const MyNft = () => {
     itemTypeSelected === "All"
       ? list
       : list.filter((item) => item.type === itemTypeSelected);
+
+
+  useEffect(() => {
+    GetAll()
+  }, [])
+
+  useEffect(() => {
+    if (!allNft?.length) return
+    setList(allNft)
+  }, [allNft])
 
   return (
     <div className="after-generate-mage-container">
@@ -138,7 +149,7 @@ const MyNft = () => {
 
         {/* Render Grid based on filteredList */}
         <Grid container spacing={3}>
-          {filteredList.map((val, index) => (
+          {filteredList?.length ? filteredList.map((val, index) => (
             <Grid
               item
               key={index}
@@ -149,7 +160,7 @@ const MyNft = () => {
               xl={2.4} // Adjust grid sizes as needed
             >
               <div className="a-g-i-p-card">
-                <img src={val.img} alt={val.title} />
+                <img src={val.url} alt={val.title} />
                 <div>
                   <Button
                     variant="contained"
@@ -178,13 +189,13 @@ const MyNft = () => {
                     disableRipple={true}
                     onClick={() => console.log("Mint NFT")}
                   >
-                    <Link to="/mintNft" style={{color: 'white', textDecoration: 'none'}}>Mint NFT</Link>
-                  
+                    <Link to={`/mintNft/${val?._id}`} style={{ color: 'white', textDecoration: 'none' }}>Mint NFT</Link>
+
                   </Button>
                 </div>
               </div>
             </Grid>
-          ))}
+          )) : "No Nft(s) minted or generated yet"}
         </Grid>
       </div>
       <br />

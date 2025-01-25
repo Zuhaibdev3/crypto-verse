@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
             element: <MyNft />
           },
           {
-            path: "/mintNft",
+            path: "/mintNft/:id",
             element: <BuySellNft />
           },
         ]
