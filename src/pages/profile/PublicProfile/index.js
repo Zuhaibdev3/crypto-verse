@@ -13,10 +13,16 @@ const PublicProfile = () => {
     const { store: { allNft, }, GetAll } = useNft()
     const { store: { user, } } = useAuth()
     const [Mode, setMode] = useState("Generated")
+    const [nfts, setNfts] = useState([])
 
     useEffect(() => {
         GetAll()
     }, [])
+
+    useEffect(() => {
+        if (!allNft?.length) return
+        setNfts(allNft)
+    }, [allNft])
 
     return (
         <div>
@@ -28,9 +34,9 @@ const PublicProfile = () => {
             <div className="profile-type-list-main">
                 <div>
                     <div>
-                        <Button variant="contained" className={Mode === "Generated" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Generated")}>Generated</Button>
-                        <Button variant="contained" className={Mode === "Minted" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Minted")}>Minted</Button>
-                        <Button variant="contained" className={Mode === "Favorites" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Favorites")}>Favorites</Button>
+                        <Button variant="contained" className={Mode === "Generated" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Generated")}>Generated ({nfts?.length})</Button>
+                        <Button variant="contained" className={Mode === "Minted" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Minted")}>Minted (0)</Button>
+                        <Button variant="contained" className={Mode === "Favorites" ? "page-type--list-selected-btn" : "page-type-list-btn"} disableRipple={true} onClick={() => setMode("Favorites")}>Favorites (0)</Button>
                     </div>
                 </div>
             </div>
@@ -38,7 +44,7 @@ const PublicProfile = () => {
                 <p className="profile-total-item-counter">{allNft?.length} Items</p>
                 : null}
             <Grid container spacing={3}>
-                {allNft?.length ? allNft?.map((el, index) => {
+                {nfts?.length ? allNft?.map((el, index) => {
                     return (
                         <>
                             <Grid
@@ -61,7 +67,7 @@ const PublicProfile = () => {
                                             {/* {val.isSelected ? (
                                                 <FavoriteIcon />
                                             ) : ( */}
-                                                <FavoriteBorderOutlinedIcon />
+                                            <FavoriteBorderOutlinedIcon />
                                             {/* )} */}
                                         </Button>
                                     </div>

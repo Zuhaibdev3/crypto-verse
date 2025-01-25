@@ -1,13 +1,12 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import Loader from "../components/Loader";
 
 const AuthGuard = () => {
-    // const { store: { status, user }, } = useAuth(null);
+    const { store: { status, user }, } = useAuth(null);
 
-    // if (status === "pending") return <Loader />;
+    if (status === "pending" || status === 0 ) return <p className="text-white">Loading...</p>;
 
-    // if (!user.token) return <Navigate to="/Login" replace />;
+    if (!user?._id) return <Navigate to="/" replace />;
 
     return <Outlet></Outlet>;
 };
