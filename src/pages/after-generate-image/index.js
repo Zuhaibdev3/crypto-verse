@@ -10,15 +10,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // Swiper core styles
 import "swiper/css/free-mode"; // For smooth dragging
 
-import {
-  buySellNftImg1,
-  buySellNftImg2,
-} from "../../asset/images";
 
 
 import { Link, useNavigate } from "react-router-dom";
 import { useStabilityAi } from "../../hooks/useStabilityAi";
 import ScrollToTop from "../../component/ScrollToTop";
+import { cardsData } from "../../constants/afterImageStatic";
 
 
 
@@ -28,54 +25,6 @@ const AfterGenerateImage = () => {
 
   const navigate = useNavigate();
   const { store: { nfts, status }, } = useStabilityAi()
-
-
-
-  const cardsData = [
-    {
-      imgSrc: buySellNftImg1,
-      title: "Abstract Art",
-      price: "200",
-    },
-    {
-      imgSrc: buySellNftImg2,
-      title: "Portrait Art",
-      price: "400",
-    },
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    },
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    } ,
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    }  ,
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    }  ,
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    }  ,
-    {
-      imgSrc: buySellNftImg2,
-      title: "Modern Art",
-      price: "300",
-    }  ,
-  ];
-
-
-
 
   return (
     <div className="after-generate-mage-container">
@@ -117,7 +66,7 @@ const AfterGenerateImage = () => {
           >
             {cardsData.map((card, index) => (
               <SwiperSlide key={index} className="carousel-slide">
-                <Link to="/mintNft" style={{textDecoration: 'none'}}>
+                <Link to={`/mintNft/${card._id}`} style={{textDecoration: 'none'}}>
                   <div className="generate-image-buy-sell-carousel-img-card">
                     <img src={card.imgSrc} alt={card.title} />
                     <div className="generate-image-buy-sell-carousel-img-card-row">

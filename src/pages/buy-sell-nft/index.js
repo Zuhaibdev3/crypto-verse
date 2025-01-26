@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import  AfterGenerateImageNavbar  from "../../component/after-genderate-image-navbar";
+import AfterGenerateImageNavbar from "../../component/after-genderate-image-navbar";
 import "./bootstrap.min.css"
 import "./index.css";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import CheckIcon from "@mui/icons-material/Check";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   AfterGenerateImageCard1,
   AfterGenerateImageCard2,
@@ -22,6 +22,8 @@ import {
 import { faArrowRight, faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTop from "../../component/ScrollToTop";
+import { cardsData } from "../../constants/afterImageStatic";
+import { useNft } from "../../hooks/useNft";
 
 
 
@@ -29,16 +31,37 @@ import ScrollToTop from "../../component/ScrollToTop";
 
 const BuySellNft = () => {
 
-  <ScrollToTop/>
+  <ScrollToTop />
 
   const navigate = useNavigate();
 
+  const { getOne, updateNft, store: { nft } } = useNft();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { id } = useParams()
+
+  const [localnft, setLocalNft] = useState(null)
 
   const [isTransactionSucessOpen, setIsTransactionSucessModalOpen] =
     useState(false);
 
-    
+  useEffect(() => {
+    if (id?.length < 4) {
+      let filterNft = cardsData.find((card) => card._id == id)
+      setLocalNft(filterNft)
+      return
+    }
+    getOne({ id })
+
+    return () => setLocalNft({})
+  }, [])
+
+  useEffect(() => {
+    if (!nft?._id) return
+    setLocalNft(nft)
+  }, [nft?._id])
+
   useEffect(() => {
     // Add or remove `modal-open` class on body to disable background scroll
     if (isModalOpen) {
@@ -64,7 +87,11 @@ const BuySellNft = () => {
   const doneTransactionSucessModal = () => {
     setIsTransactionSucessModalOpen(false);
     setIsModalOpen(false);
-    navigate("/profile")
+
+    updateNft({ id, status: "MINTED" }).then(() => {
+      navigate("/profile")
+    })
+
   };
 
   return (
@@ -86,7 +113,8 @@ const BuySellNft = () => {
               className="buy-sell-nft-column1"
               style={{ border: "" }}
             >
-              <img src={NftStoreImg3} />
+              {/* <img src={NftStoreImg3} /> */}
+              <img src={localnft?.imgSrc || localnft?.url} />
             </Grid>
 
             <Grid
@@ -99,7 +127,8 @@ const BuySellNft = () => {
               <div className="buy-sell-nft-column2">
                 <div className="mt-4 mt-lg-0 ms-0">
                   <div>
-                    <h1 className="nft-buy-sell-name">Artcrypto</h1>
+                    {/* <h1 className="nft-buy-sell-name">Artcrypto</h1> */}
+                    <h1 className="nft-buy-sell-name">{localnft?.title || "Unnamed Nft"}</h1>
                   </div>
                   <div className="row my-2">
                     <div className="col-12 col-lg-5">
@@ -208,7 +237,7 @@ const BuySellNft = () => {
                     <p>Price</p>
                     <div className="buy-sell-pricing-column2">
                       <h2>1.12 SOLANA</h2>
-                      <p>$ 366.86</p>
+                      <p>$ {localnft?.price}</p>
                     </div>
                   </div>
 
@@ -231,7 +260,7 @@ const BuySellNft = () => {
               </button>
             </div>
             <div className="buy-sell-pop-up-image-bid-box">
-              <img src={NftStoreImg3} alt />
+              <img src={localnft?.imgSrc} alt />
             </div>
             <div className="buy-sell-pop-up-middle-bid-box">
               <div className="buy-sell-bid-info">
@@ -269,8 +298,8 @@ const BuySellNft = () => {
 
 
 
- {/* Transaction Success Dialoge Box */}
- {isTransactionSucessOpen && (
+      {/* Transaction Success Dialoge Box */}
+      {isTransactionSucessOpen && (
         <div className="buy-sell-pop-up-lab-transaction-box-overlay">
           <div className="container buy-sell-transaction-box">
             <div className="buy-sell-transaction-box-head">
@@ -302,10 +331,10 @@ const BuySellNft = () => {
                     </button>
                   </p>
                 </div>
-                </div>
-                <div className="buy-sell-transaction-middle-box-divider" />
+              </div>
+              <div className="buy-sell-transaction-middle-box-divider" />
 
-                <div className="buy-sell-transaction-row">
+              <div className="buy-sell-transaction-row">
                 <div className="col-6">
                   <small className="buy-sell-light-text">
                     NFT contract

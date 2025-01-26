@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ImageToImageGenerateAction } from '../store/apps/stabilityAi';
-import { GetAllAction } from '../store/apps/nft';
+import { GetAllAction, getOneAction, handleNftLikeReaction, updateAction } from '../store/apps/nft';
 
 export const useNft = () => {
     const dispatch = useDispatch();
@@ -12,10 +12,24 @@ export const useNft = () => {
         dispatch(GetAllAction(body))
     }
 
+    const getOne = (body) => {
+        dispatch(getOneAction(body))
+    }
 
+    const handleNftLike = async(body) => {
+       return dispatch(handleNftLikeReaction(body))
+    }
+
+    const updateNft = async(body) => {
+        console.log(body , "body hook")
+       return dispatch(updateAction(body))
+    }
 
     return {
         store,
         GetAll,
+        getOne,
+        handleNftLike,
+        updateNft
     };
 };
